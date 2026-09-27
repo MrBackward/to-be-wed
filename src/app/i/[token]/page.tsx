@@ -26,7 +26,7 @@ export default async function InvitePage({ params }: PageProps<"/i/[token]">) {
   return (
     <main>
       <InviteHero greeting={greeting} responded={invitation.responded} />
-      <div className="px-3 pt-2 sm:px-4">
+      <div className="bg-[linear-gradient(to_bottom,var(--color-ivory)_4rem,var(--color-maroon-deep)_28rem)] px-3 pt-2 sm:px-4">
         <Card>
           <WeddingDetails
             ceremonyGuest={invitation.ceremony}
@@ -40,8 +40,8 @@ export default async function InvitePage({ params }: PageProps<"/i/[token]">) {
           )}
         </Card>
       </div>
-      <div className="pb-[env(safe-area-inset-bottom)]">
-        <PhotoCredit />
+      <div className="bg-maroon-deep pb-[env(safe-area-inset-bottom)]">
+        <PhotoCredit onDark />
       </div>
     </main>
   );

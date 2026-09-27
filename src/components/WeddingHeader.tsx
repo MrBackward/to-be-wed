@@ -1,5 +1,6 @@
 import barn from "@/assets/venue-barn.webp";
 import { AddToCalendar } from "@/components/AddToCalendar";
+import { SprigDivider } from "@/components/Botanical";
 import { Monogram } from "@/components/Frame";
 import { Hero } from "@/components/Hero";
 import { formatTime, wedding } from "@/config/wedding";
@@ -11,20 +12,19 @@ export function InviteHero({ greeting, responded }: { greeting: string; responde
       alt="The Bison Barn sign in front of the barn, with its timber sliding doors, festoon lights and native grasses"
       position="45% 42%"
     >
-      <Monogram light />
+      <Monogram />
       {responded ? (
         <h1 className="sr-only">{wedding.couple}</h1>
       ) : (
         <>
-          <p className="font-serif text-2xl text-ivory italic">Dear {greeting},</p>
-          <p className="mt-4 text-xs font-medium tracking-[0.2em] text-balance text-gold uppercase sm:tracking-[0.3em]">
+          <p className="font-serif text-2xl text-maroon italic">Dear {greeting},</p>
+          <p className="mt-4 text-xs font-medium tracking-[0.2em] text-balance text-gold-deep uppercase sm:tracking-[0.3em]">
             You&apos;re invited to the wedding of
           </p>
           <h1 className="mt-2 font-serif text-[clamp(2.75rem,13vw,5rem)] leading-tight whitespace-nowrap">{wedding.couple}</h1>
-          <p className="mt-2 text-sm text-ivory/90">{wedding.venue}</p>
           <a
             href="#details"
-            className="mx-auto mt-6 mb-4 flex min-h-11 flex-col items-center justify-center px-4 text-xs font-medium tracking-[0.2em] text-ivory/85 uppercase"
+            className="mx-auto mt-6 mb-4 flex min-h-11 flex-col items-center justify-center px-4 text-xs font-medium tracking-[0.2em] text-maroon/80 uppercase"
           >
             RSVP below
             <svg aria-hidden viewBox="0 0 20 20" className="mt-1 size-5 animate-nudge fill-none stroke-current stroke-[1.8] motion-reduce:animate-none">
@@ -98,7 +98,7 @@ export function WeddingDetails({
       </dl>
       {calendarToken && <AddToCalendar token={calendarToken} ceremonyGuest={ceremonyGuest} />}
       {!responded && <p className="mt-5 text-sm text-maroon italic">Kindly reply by {wedding.rsvpBy}</p>}
-      <div className="mx-auto mt-8 h-px w-24 bg-gold" />
+      <SprigDivider className="mt-8" />
     </header>
   );
 }

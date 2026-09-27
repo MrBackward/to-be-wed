@@ -25,10 +25,10 @@ export function Hero({
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(to_bottom,rgb(78_15_24/0.25),transparent_18%,transparent_68%,var(--color-maroon-deep))]"
+          className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_60%,var(--color-ivory))]"
         />
       </div>
-      <div className="relative -mt-8 px-6 text-center text-ivory">{children}</div>
+      <div className="relative -mt-8 px-6 text-center text-maroon-deep">{children}</div>
     </section>
   );
 }

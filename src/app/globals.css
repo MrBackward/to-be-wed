@@ -6,6 +6,7 @@
   --color-maroon-mist: #f4e9e7;
   --color-ivory: #faf6f0;
   --color-gold: #c9a96e;
+  --color-gold-deep: #86652b;
   --color-ink: #2e1d20;
 
   --animate-drift: drift 40s ease-out both;
@@ -40,10 +41,7 @@
 
 html {
   min-height: 100%;
-  background-color: var(--color-maroon-deep);
-  background-image: radial-gradient(ellipse 120% 70% at 50% 0%, #8a2a37 0%, var(--color-maroon-deep) 70%);
-  background-repeat: no-repeat;
-  background-size: 100% 100vh;
+  background-color: var(--color-ivory);
 }
 
 body {
