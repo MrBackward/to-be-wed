@@ -14,7 +14,7 @@ Next.js 16, TanStack Form, Zod, Google Sheets API, deployed to AWS (Lambda + Clo
 - The invite page opens on a photo of the venue (`src/assets/venue-barn.webp`) and the landing page on the dam (`src/assets/venue-dam.webp`); venue name, address, ceremony and reception spots and the photo credit live in `src/config/wedding.ts`.
 - After RSVPing, guests get an **Add to calendar** button (a calendar file on iPhone and desktop, Google Calendar on Android). Times live in `src/config/wedding.ts`.
 - RSVPs can only be sent once. After that the link shows a confirmation.
-- The site only ever writes these cells: **Invite Accepted** (`Yes`/`No`), **With +1** (the +1's name), **Song Requests**, **Message to couple**, and **RSVP Response** (the full phrase, if you add that column; it's optional). Everything else, including the totals formulas, is left alone. Columns are found by header name, so they can be moved around.
+- The site only ever writes these cells: **Invite Accepted** (`Yes`/`No`), **With +1** (the +1's name), **Dietary Requirements**, **+1 Dietary Requirements**, **Song Requests**, **Message to couple**, and **RSVP Response** (the full phrase, if you add that column; it's optional). Everything else, including the totals formulas, is left alone. Columns are found by header name, so they can be moved around.
 
 ## One-time setup
 

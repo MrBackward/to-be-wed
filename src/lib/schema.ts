@@ -10,8 +10,10 @@ export const rsvpSchema = z.object({
         feeling: z.string().trim().max(40, "Keep it under 40 characters"),
         emoji: z.string().refine((value) => value === "" || emojis.includes(value)),
         reply: z.string(),
+        dietary: z.string().trim().max(200),
         bringingPlusOne: z.boolean(),
         plusOneName: z.string().trim().max(100),
+        plusOneDietary: z.string().trim().max(200),
       })
       .refine((member) => member.reply === "" || repliesFor(member.attending).includes(member.reply), {
         path: ["reply"],

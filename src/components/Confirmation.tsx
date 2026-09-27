@@ -32,9 +32,15 @@ export function Confirmation({ greeting, members }: { greeting: string; members:
               <p className="text-sm text-ink/80">
                 {member.response ? lowerFirst(member.response) : isComing(member) ? "Attending" : "Not attending"}
               </p>
+              {member.dietary && (
+                <p className="mt-1 text-sm text-ink/80">
+                  <span className="font-medium text-maroon-deep">Dietary:</span> {member.dietary}
+                </p>
+              )}
               {member.plusOne && (
                 <p className="mt-1 text-sm text-ink/80">
                   <span className="font-medium text-maroon-deep">+1:</span> {member.plusOne}
+                  {member.plusOneDietary && ` (${member.plusOneDietary})`}
                 </p>
               )}
             </div>

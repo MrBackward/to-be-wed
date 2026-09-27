@@ -8,6 +8,8 @@ const COLUMNS = {
   token: "HASH STRING",
   accepted: "Invite Accepted",
   plusOne: "With +1",
+  dietary: "Dietary Requirements",
+  plusOneDietary: "+1 Dietary Requirements",
   song: "Song Requests",
   message: "Message to couple",
   response: "RSVP Response",
@@ -26,6 +28,8 @@ export type Guest = {
   token: string;
   accepted: string;
   plusOne: string;
+  dietary: string;
+  plusOneDietary: string;
   song: string;
   message: string;
   response: string;
@@ -107,6 +111,8 @@ export async function loadSheet(): Promise<Sheet> {
         token: cell("token"),
         accepted: cell("accepted"),
         plusOne: cell("plusOne"),
+        dietary: cell("dietary"),
+        plusOneDietary: cell("plusOneDietary"),
         song: cell("song"),
         message: cell("message"),
         response: cell("response"),

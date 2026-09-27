@@ -13,6 +13,44 @@ export type Member = { row: number; name: string; plusOneAllowed: boolean; feeli
 const inputClass =
   "block w-full rounded-md border border-maroon/30 bg-white px-4 py-3 text-base text-ink placeholder:text-ink/40 focus:border-maroon focus:ring-2 focus:ring-gold/60 focus:outline-none";
 
+function DietaryInput({
+  id,
+  label,
+  labelClass = "font-medium",
+  value,
+  onChange,
+  onBlur,
+}: {
+  id: string;
+  label: string;
+  labelClass?: string;
+  value: string;
+  onChange: (value: string) => void;
+  onBlur: () => void;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className={`mb-1 block text-maroon-deep ${labelClass}`}>
+        {label}
+      </label>
+      <p className="mb-2 text-sm text-ink/60">Optional. Allergies, intolerances or preferences.</p>
+      <input
+        id={id}
+        name={id}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        onBlur={onBlur}
+        maxLength={200}
+        placeholder="e.g. vegetarian, coeliac, nut allergy"
+        autoComplete="off"
+        autoCapitalize="sentences"
+        enterKeyHint="next"
+        className={inputClass}
+      />
+    </div>
+  );
+}
+
 function errorText(errors: unknown[]) {
   const [first] = errors;
   if (!first) return undefined;
@@ -33,8 +71,10 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
         feeling: member.feeling,
         emoji: "",
         reply: "",
+        dietary: "",
         bringingPlusOne: false,
         plusOneName: "",
+        plusOneDietary: "",
       })),
       song: "",
       message: "",
@@ -98,6 +138,25 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
             )}
           </form.Field>
 
+          <form.Subscribe selector={(state) => state.values.members[index].attending === "yes"}>
+            {(attending) =>
+              attending && (
+                <form.Field name={`members[${index}].dietary`}>
+                  {(field) => (
+                    <DietaryInput
+                      id={field.name}
+                      label={solo ? "Any dietary requirements?" : `Dietary requirements for ${member.name.split(/\s+/)[0]}`}
+                      labelClass="font-serif text-xl"
+                      value={field.state.value}
+                      onChange={field.handleChange}
+                      onBlur={field.handleBlur}
+                    />
+                  )}
+                </form.Field>
+              )
+            }
+          </form.Subscribe>
+
           {member.plusOneAllowed && (
             <form.Subscribe selector={(state) => state.values.members[index].attending === "yes"}>
               {(attending) =>
@@ -148,6 +207,23 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
                                 </div>
                               );
                             }}
+                          </form.Field>
+                        )
+                      }
+                    </form.Subscribe>
+                    <form.Subscribe selector={(state) => state.values.members[index].bringingPlusOne}>
+                      {(bringing) =>
+                        bringing && (
+                          <form.Field name={`members[${index}].plusOneDietary`}>
+                            {(field) => (
+                              <DietaryInput
+                                id={field.name}
+                                label="Their dietary requirements"
+                                value={field.state.value}
+                                onChange={field.handleChange}
+                                onBlur={field.handleBlur}
+                              />
+                            )}
                           </form.Field>
                         )
                       }
