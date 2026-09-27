@@ -120,17 +120,25 @@ export async function loadSheet(): Promise<Sheet> {
 
 export async function writeCells(sheet: Sheet, cells: CellUpdate[]) {
   const updates = cells.filter(({ column }) => sheet.columns[column] !== -1);
-  if (updates.length === 0) return;
-  await api().spreadsheets.values.batchUpdate({
-    spreadsheetId: Resource.SheetId.value,
-    requestBody: {
-      valueInputOption: "RAW",
-      data: updates.map(({ row, column, value }) => ({
-        range: `${quoteTab(sheet.title)}!${columnLetter(sheet.columns[column])}${row}`,
-        values: [[value]],
-      })),
-    },
-  });
+  const range = ({ row, column }: CellUpdate) => `${quoteTab(sheet.title)}!${columnLetter(sheet.columns[column])}${row}`;
+  const filled = updates.filter(({ value }) => value !== "");
+  const empty = updates.filter(({ value }) => value === "");
+
+  await Promise.all([
+    filled.length &&
+      api().spreadsheets.values.batchUpdate({
+        spreadsheetId: Resource.SheetId.value,
+        requestBody: {
+          valueInputOption: "RAW",
+          data: filled.map((update) => ({ range: range(update), values: [[update.value]] })),
+        },
+      }),
+    empty.length &&
+      api().spreadsheets.values.batchClear({
+        spreadsheetId: Resource.SheetId.value,
+        requestBody: { ranges: empty.map(range) },
+      }),
+  ]);
 }
 
 export async function getInvitation(token: string) {
