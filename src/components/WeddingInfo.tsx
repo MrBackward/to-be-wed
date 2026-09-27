@@ -48,7 +48,7 @@ export function WeddingInfo({ early, ceremony }: { early: boolean; ceremony: boo
         </Item>
         <Item title="Getting there">
           You&apos;ll need to organise your own transport to and from the venue. Please don&apos;t drink and drive.
-          There are a lot of cops on the guest list 🤪
+          There are a lot of cops on the guest list.
         </Item>
         <Item title="Footwear">
           {ceremony &&
@@ -75,8 +75,8 @@ export function WeddingInfo({ early, ceremony }: { early: boolean; ceremony: boo
           meet the cops who aren&apos;t on the guest list.
         </Item>
         <Item title="Gifts">
-          Your company is the best gift, so please don&apos;t feel you need to bring anything. If you&apos;d still like
-          to give us something, a card with a contribution towards our next adventure would be warmly appreciated.
+          There&apos;s no expectation of gifts. We invited you because we like you, not your wallet. If you&apos;d still
+          like to give us something, a card with a contribution towards our next adventure would be warmly appreciated.
         </Item>
       </div>
     </section>
