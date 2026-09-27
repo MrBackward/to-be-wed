@@ -12,7 +12,9 @@ function sign(id: string) {
 }
 
 export function createToken() {
-  const id = randomBytes(6).toString("base64url");
+  let id: string;
+  do id = randomBytes(6).toString("base64url");
+  while (id.startsWith("-"));
   return `${id}.${sign(id)}`;
 }
 
