@@ -1,8 +1,18 @@
-import { lowerFirst } from "@/lib/names";
+import { firstNames, lowerFirst } from "@/lib/names";
 import type { Guest } from "@/lib/sheet";
 
+const isComing = (guest: Guest) => /^y/i.test(guest.accepted);
+
+function thanksMessage(members: Guest[]) {
+  const coming = members.filter(isComing);
+  const missing = members.filter((member) => !isComing(member));
+  if (missing.length === 0) return "We can't wait to celebrate with you.";
+  if (coming.length === 0) return "We'll miss you, and we're grateful you let us know.";
+  const names = (guests: Guest[]) => firstNames(guests.map((guest) => guest.name));
+  return `We can't wait to celebrate with ${names(coming)}, and we'll miss you, ${names(missing)}.`;
+}
+
 export function Confirmation({ greeting, members }: { greeting: string; members: Guest[] }) {
-  const anyoneComing = members.some((member) => /^y/i.test(member.accepted));
   const { song, message } = members[0];
 
   return (
@@ -10,21 +20,30 @@ export function Confirmation({ greeting, members }: { greeting: string; members:
       <div>
         <h2 className="font-serif text-3xl text-maroon-deep">Thank you, {greeting}</h2>
         <p className="mt-2 text-ink/80">
-          {anyoneComing ? "We can't wait to celebrate with you." : "We'll miss you, and we're grateful you let us know."}
+          {thanksMessage(members)}
         </p>
       </div>
 
-      <ul className="space-y-2 rounded-md bg-maroon-mist/60 p-4 text-left">
+      <ul className="space-y-3 rounded-md bg-maroon-mist/60 p-4 text-left">
         {members.map((member) => (
-          <li key={member.row} className="flex flex-wrap items-baseline justify-between gap-x-3">
-            <span className="font-medium text-maroon-deep">{member.name}</span>
-            <span className="text-sm text-ink/80">
-              {member.response
-                ? lowerFirst(member.response)
-                : /^y/i.test(member.accepted)
-                  ? "Attending"
-                  : "Not attending"}
-              {member.plusOne && ` with ${member.plusOne}`}
+          <li key={member.row} className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="font-medium text-maroon-deep">{member.name}</p>
+              <p className="text-sm text-ink/80">
+                {member.response ? lowerFirst(member.response) : isComing(member) ? "Attending" : "Not attending"}
+              </p>
+              {member.plusOne && (
+                <p className="mt-1 text-sm text-ink/80">
+                  <span className="font-medium text-maroon-deep">+1:</span> {member.plusOne}
+                </p>
+              )}
+            </div>
+            <span
+              className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium ${
+                isComing(member) ? "bg-maroon text-ivory" : "bg-ink/10 text-ink/70"
+              }`}
+            >
+              {isComing(member) ? "Coming" : "Not coming"}
             </span>
           </li>
         ))}

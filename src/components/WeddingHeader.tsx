@@ -37,7 +37,15 @@ export function InviteHero({ greeting, responded }: { greeting: string; responde
   );
 }
 
-export function WeddingDetails({ ceremonyGuest, calendarToken }: { ceremonyGuest: boolean; calendarToken?: string }) {
+export function WeddingDetails({
+  ceremonyGuest,
+  responded,
+  calendarToken,
+}: {
+  ceremonyGuest: boolean;
+  responded: boolean;
+  calendarToken?: string;
+}) {
   const reception = `${formatTime(wedding.reception.start)} until late`;
   return (
     <header id="details" className="scroll-mt-6">
@@ -88,11 +96,8 @@ export function WeddingDetails({ ceremonyGuest, calendarToken }: { ceremonyGuest
           </dd>
         </div>
       </dl>
-      {calendarToken ? (
-        <AddToCalendar token={calendarToken} ceremonyGuest={ceremonyGuest} />
-      ) : (
-        <p className="mt-5 text-sm text-maroon italic">Kindly reply by {wedding.rsvpBy}</p>
-      )}
+      {calendarToken && <AddToCalendar token={calendarToken} ceremonyGuest={ceremonyGuest} />}
+      {!responded && <p className="mt-5 text-sm text-maroon italic">Kindly reply by {wedding.rsvpBy}</p>}
       <div className="mx-auto mt-8 h-px w-24 bg-gold" />
     </header>
   );
