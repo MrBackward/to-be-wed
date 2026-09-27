@@ -10,6 +10,7 @@ export function Choice({
   onChange,
   onBlur,
   error,
+  inline = false,
 }: {
   name: string;
   legend: string;
@@ -18,11 +19,12 @@ export function Choice({
   onChange: (value: string) => void;
   onBlur?: () => void;
   error?: string;
+  inline?: boolean;
 }) {
   return (
     <fieldset>
       <legend className="mb-2 font-serif text-xl text-maroon-deep">{legend}</legend>
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className={`grid gap-2 ${inline ? "grid-cols-2" : "sm:grid-cols-2"}`}>
         {options.map((option) => (
           <label key={option.value} className="block cursor-pointer">
             <input

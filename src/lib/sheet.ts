@@ -10,7 +10,10 @@ const COLUMNS = {
   plusOne: "With +1",
   song: "Song Requests",
   message: "Message to couple",
+  response: "RSVP Response",
 } as const;
+
+const OPTIONAL: Column[] = ["response"];
 
 export type Column = keyof typeof COLUMNS;
 
@@ -24,6 +27,7 @@ export type Guest = {
   plusOne: string;
   song: string;
   message: string;
+  response: string;
 };
 
 export type Sheet = {
@@ -85,7 +89,7 @@ export async function loadSheet(): Promise<Sheet> {
   const columns = Object.fromEntries(
     Object.entries(COLUMNS).map(([key, label]) => {
       const index = headers.indexOf(label.toLowerCase());
-      if (index === -1) throw new Error(`Sheet is missing the "${label}" column`);
+      if (index === -1 && !OPTIONAL.includes(key as Column)) throw new Error(`Sheet is missing the "${label}" column`);
       return [key, index];
     }),
   ) as Record<Column, number>;
@@ -103,6 +107,7 @@ export async function loadSheet(): Promise<Sheet> {
         plusOne: cell("plusOne"),
         song: cell("song"),
         message: cell("message"),
+        response: cell("response"),
       };
     })
     .filter((guest) => guest.name);
@@ -110,7 +115,8 @@ export async function loadSheet(): Promise<Sheet> {
   return { title, columns, guests };
 }
 
-export async function writeCells(sheet: Sheet, updates: CellUpdate[]) {
+export async function writeCells(sheet: Sheet, cells: CellUpdate[]) {
+  const updates = cells.filter(({ column }) => sheet.columns[column] !== -1);
   if (updates.length === 0) return;
   await api().spreadsheets.values.batchUpdate({
     spreadsheetId: Resource.SheetId.value,

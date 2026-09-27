@@ -8,9 +8,10 @@ Next.js 16, TanStack Form, Zod, Google Sheets API, deployed to AWS (Lambda + Clo
 
 - A link looks like `https://natandxander.wedding/i/<id>.<signature>`. The signature is an HMAC of the id using `LinkSecret`, so links can't be guessed or forged.
 - The token lives in the sheet's **HASH STRING** column. Couples linked through **Connected for single invite** share one token and one QR code, and answer per person.
+- Each person taps **Accepts** or **Declines**. Below that is an optional "make it fun" section: a feeling (free text or a suggestion), an emoji, and a synonym for their reply ("Ecstatically RSVPs yes 🥳").
 - **plus one allowed** = `Yes` offers that guest a +1 (with a name) once they accept.
 - RSVPs can only be sent once. After that the link shows a confirmation.
-- The site only ever writes these cells: **Invite Accepted** (`Yes`/`No`), **With +1** (the +1's name), **Song Requests** and **Message to couple**. Everything else, including the totals formulas, is left alone. Columns are found by header name, so they can be moved around.
+- The site only ever writes these cells: **Invite Accepted** (`Yes`/`No`), **With +1** (the +1's name), **Song Requests**, **Message to couple**, and **RSVP Response** (the full phrase, if you add that column; it's optional). Everything else, including the totals formulas, is left alone. Columns are found by header name, so they can be moved around.
 
 ## One-time setup
 

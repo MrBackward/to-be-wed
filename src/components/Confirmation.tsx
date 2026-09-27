@@ -1,3 +1,4 @@
+import { lowerFirst } from "@/lib/names";
 import type { Guest } from "@/lib/sheet";
 
 export function Confirmation({ greeting, members }: { greeting: string; members: Guest[] }) {
@@ -18,7 +19,11 @@ export function Confirmation({ greeting, members }: { greeting: string; members:
           <li key={member.row} className="flex flex-wrap items-baseline justify-between gap-x-3">
             <span className="font-medium text-maroon-deep">{member.name}</span>
             <span className="text-sm text-ink/80">
-              {/^y/i.test(member.accepted) ? "Attending" : "Not attending"}
+              {member.response
+                ? lowerFirst(member.response)
+                : /^y/i.test(member.accepted)
+                  ? "Attending"
+                  : "Not attending"}
               {member.plusOne && ` with ${member.plusOne}`}
             </span>
           </li>

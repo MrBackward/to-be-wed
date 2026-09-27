@@ -1,6 +1,7 @@
 "use server";
 
-import { rsvpSchema, type RsvpValues } from "@/lib/schema";
+import { replyFor, rsvpSchema, type RsvpValues } from "@/lib/schema";
+import { replyPhrase } from "@/lib/names";
 import { getInvitation, writeCells, type CellUpdate } from "@/lib/sheet";
 import { verifyToken } from "@/lib/token";
 
@@ -30,6 +31,7 @@ export async function submitRsvp(token: string, values: RsvpValues): Promise<Rsv
       const plusOne = member.plusOneAllowed && attending && answer.bringingPlusOne ? answer.plusOneName : "";
       return [
         { row: member.row, column: "accepted", value: attending ? "Yes" : "No" },
+        { row: member.row, column: "response", value: replyPhrase(answer.feeling, replyFor(answer.attending, answer.reply), answer.emoji) },
         { row: member.row, column: "plusOne", value: plusOne },
         { row: member.row, column: "song", value: song },
         { row: member.row, column: "message", value: message },

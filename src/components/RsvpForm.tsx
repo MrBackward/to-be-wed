@@ -1,13 +1,14 @@
 "use client";
 
-import { revalidateLogic, useForm } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { submitRsvp } from "@/app/i/[token]/actions";
 import { Choice } from "@/components/Choice";
+import { ReplyPicker } from "@/components/ReplyPicker";
 import { rsvpSchema, type RsvpValues } from "@/lib/schema";
 
-export type Member = { row: number; name: string; plusOneAllowed: boolean };
+export type Member = { row: number; name: string; plusOneAllowed: boolean; feeling: string };
 
 const inputClass =
   "block w-full rounded-md border border-maroon/30 bg-white px-4 py-3 text-base text-ink placeholder:text-ink/40 focus:border-maroon focus:ring-2 focus:ring-gold/60 focus:outline-none";
@@ -29,14 +30,16 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
       members: members.map((member) => ({
         row: member.row,
         attending: "",
+        feeling: member.feeling,
+        emoji: "",
+        reply: "",
         bringingPlusOne: false,
         plusOneName: "",
       })),
       song: "",
       message: "",
     } as RsvpValues,
-    validationLogic: revalidateLogic(),
-    validators: { onDynamic: rsvpSchema },
+    validators: { onSubmit: rsvpSchema },
     onSubmit: async ({ value }) => {
       setServerError(undefined);
       const result = await submitRsvp(token, value);
@@ -60,19 +63,38 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
       {members.map((member, index) => (
         <div key={member.row} className="space-y-4">
           <form.Field name={`members[${index}].attending`}>
-            {(field) => (
-              <Choice
-                name={field.name}
-                legend={solo ? "Will you be joining us?" : member.name}
-                options={[
-                  { value: "yes", label: "Joyfully accepts" },
-                  { value: "no", label: "Regretfully declines" },
-                ]}
-                value={field.state.value}
-                onChange={(value) => field.handleChange(value as "yes" | "no")}
-                onBlur={field.handleBlur}
-                error={errorText(field.state.meta.errors)}
-              />
+            {(attendingField) => (
+              <form.Field name={`members[${index}].feeling`}>
+                {(feelingField) => (
+                  <form.Field name={`members[${index}].emoji`}>
+                    {(emojiField) => (
+                      <form.Field name={`members[${index}].reply`}>
+                        {(replyField) => (
+                          <ReplyPicker
+                            id={`member-${index}`}
+                            legend={solo ? "Will you be joining us?" : member.name}
+                            firstName={member.name.split(/\s+/)[0]}
+                            attending={attendingField.state.value}
+                            feeling={feelingField.state.value}
+                            emoji={emojiField.state.value}
+                            reply={replyField.state.value}
+                            onAttendingChange={(value) => {
+                              attendingField.handleChange(value as "yes" | "no");
+                              replyField.handleChange("");
+                            }}
+                            onFeelingChange={feelingField.handleChange}
+                            onEmojiChange={emojiField.handleChange}
+                            onReplyChange={replyField.handleChange}
+                            onBlur={attendingField.handleBlur}
+                            attendingError={errorText(attendingField.state.meta.errors)}
+                            feelingError={errorText(feelingField.state.meta.errors)}
+                          />
+                        )}
+                      </form.Field>
+                    )}
+                  </form.Field>
+                )}
+              </form.Field>
             )}
           </form.Field>
 
