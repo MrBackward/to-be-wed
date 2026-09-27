@@ -1,4 +1,4 @@
-import barn from "@/assets/venue-barn.jpg";
+import barn from "@/assets/venue-barn.webp";
 import { AddToCalendar } from "@/components/AddToCalendar";
 import { Monogram } from "@/components/Frame";
 import { Hero } from "@/components/Hero";

@@ -1,4 +1,4 @@
-import dam from "@/assets/venue-dam.jpg";
+import dam from "@/assets/venue-dam.webp";
 import { Monogram, PhotoCredit } from "@/components/Frame";
 import { Hero } from "@/components/Hero";
 import { wedding } from "@/config/wedding";

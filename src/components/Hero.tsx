@@ -20,7 +20,6 @@ export function Hero({
           fill
           preload
           placeholder="blur"
-          sizes="(max-width: 768px) 1200px, 100vw"
           style={{ objectPosition: position }}
           className="animate-drift object-cover motion-reduce:animate-none"
         />
