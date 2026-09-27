@@ -6,7 +6,9 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint",
-    "start": "next start"
+    "start": "next start",
+    "invites": "sst shell -- tsx scripts/generate-invites.mts",
+    "invites:prod": "sst shell --stage production -- tsx scripts/generate-invites.mts"
   },
   "dependencies": {
     "@googleapis/sheets": "^18.0.1",
