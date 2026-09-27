@@ -14,6 +14,7 @@ const COLUMNS = {
   message: "Message to couple",
   response: "RSVP Response",
   ceremony: "Invited to ceremony",
+  early: "Early arrival",
 } as const;
 
 const OPTIONAL: Column[] = ["response", "ceremony"];
@@ -34,6 +35,7 @@ export type Guest = {
   message: string;
   response: string;
   ceremony: boolean;
+  early: boolean;
 };
 
 export type Sheet = {
@@ -117,6 +119,7 @@ export async function loadSheet(): Promise<Sheet> {
         message: cell("message"),
         response: cell("response"),
         ceremony: /^y(es)?$/i.test(cell("ceremony")),
+        early: /^y(es)?$/i.test(cell("early")),
       };
     })
     .filter((guest) => guest.name);
@@ -156,6 +159,7 @@ export async function getInvitation(token: string) {
     members,
     responded: members.some((member) => member.accepted),
     ceremony: members.some((member) => member.ceremony),
+    early: members.some((member) => member.early),
   };
 }
 

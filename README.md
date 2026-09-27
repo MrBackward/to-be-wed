@@ -11,6 +11,7 @@ Next.js 16, TanStack Form, Zod, Google Sheets API, deployed to AWS (Lambda + Clo
 - Each person taps **Accepts** or **Declines**. Below that is an optional "make it fun" section: a feeling (free text or a suggestion), an emoji, and a synonym for their reply ("Ecstatically RSVPs yes 🥳").
 - **plus one allowed** = `Yes` offers that guest a +1 (with a name) once they accept.
 - **Invited to ceremony** = `Yes` shows that invitation the 11:00 am ceremony as well as the 2:30 pm reception, and gives them separate calendar events for each. Everyone else only ever sees the reception time; the ceremony is never mentioned to them.
+- **Early arrival** = `Yes` tells that invitation they can arrive from 10:00 am the day before (the venue allows 10 people, including the two of you). Everyone else sees the regular camping times. Camping, drinks and noise info lives in `src/config/wedding.ts` and `src/components/WeddingInfo.tsx`.
 - The invite page opens on a photo of the venue (`src/assets/venue-barn.webp`) and the landing page on the dam (`src/assets/venue-dam.webp`); venue name, address, ceremony and reception spots and the photo credit live in `src/config/wedding.ts`.
 - After RSVPing, guests get an **Add to calendar** button (a calendar file on iPhone and desktop, Google Calendar on Android). Times live in `src/config/wedding.ts`.
 - RSVPs can only be sent once. After that the link shows a confirmation.

@@ -16,7 +16,7 @@ export function Confirmation({ greeting, members }: { greeting: string; members:
   const { song, message } = members[0];
 
   return (
-    <section className="mt-8 space-y-6">
+    <section className="space-y-6">
       <div>
         <h2 className="font-serif text-3xl text-maroon-deep">Thank you, {greeting}</h2>
         <p className="mt-2 text-ink/80">
