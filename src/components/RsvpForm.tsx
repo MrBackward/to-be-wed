@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 import { submitRsvp } from "@/app/i/[token]/actions";
 import { Choice } from "@/components/Choice";
 import { ReplyPicker } from "@/components/ReplyPicker";
+import { markSubmitted } from "@/components/ScrollAfterSubmit";
 import { rsvpSchema, type RsvpValues } from "@/lib/schema";
 
 export type Member = { row: number; name: string; plusOneAllowed: boolean; feeling: string };
@@ -87,6 +88,7 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
         setServerError(result.error);
         return;
       }
+      markSubmitted();
       startRefresh(() => router.refresh());
     },
   });

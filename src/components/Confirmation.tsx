@@ -1,3 +1,4 @@
+import { ScrollAfterSubmit } from "@/components/ScrollAfterSubmit";
 import { firstNames, lowerFirst } from "@/lib/names";
 import type { Guest } from "@/lib/sheet";
 
@@ -16,12 +17,11 @@ export function Confirmation({ greeting, members }: { greeting: string; members:
   const { song, message } = members[0];
 
   return (
-    <section className="space-y-6">
+    <section id="rsvp" className="scroll-mt-16 space-y-6">
+      <ScrollAfterSubmit id="rsvp" />
       <div>
         <h2 className="font-serif text-3xl text-maroon-deep">Thank you, {greeting}</h2>
-        <p className="mt-2 text-ink/80">
-          {thanksMessage(members)}
-        </p>
+        <p className="mt-2 text-ink/80">{thanksMessage(members)}</p>
       </div>
 
       <ul className="space-y-3 rounded-md bg-maroon-mist/60 p-4 text-left">
@@ -71,6 +71,21 @@ export function Confirmation({ greeting, members }: { greeting: string; members:
           )}
         </dl>
       )}
+
+      <div>
+        <p className="text-sm text-pretty text-ink/80">
+          The wedding details{members.some(isComing) && ", including calendar events,"} are at the top of this page.
+        </p>
+        <a
+          href="#top"
+          className="inline-flex min-h-11 items-center gap-1.5 px-2 text-sm font-medium text-maroon underline decoration-gold decoration-2 underline-offset-4"
+        >
+          <svg aria-hidden viewBox="0 0 20 20" className="size-4 fill-none stroke-current stroke-[1.8]">
+            <path d="M5.5 12.5 10 8l4.5 4.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Back to top
+        </a>
+      </div>
 
       <p className="text-sm text-ink/60">Need to change something? Just get in touch with us.</p>
     </section>
