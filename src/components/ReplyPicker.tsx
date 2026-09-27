@@ -89,7 +89,7 @@ export function ReplyPicker({
 
         <div className="clear-left">
           <label htmlFor={`${id}-feeling`} className="mb-2 block text-sm font-medium text-ink/70">
-            How are you feeling? Type anything, or tap an idea.
+            <span className="sr-only">How are you feeling? </span>We&apos;ll be reading these. Best one gets a free 6 pack 🍻
           </label>
           <div className="relative">
             <input
