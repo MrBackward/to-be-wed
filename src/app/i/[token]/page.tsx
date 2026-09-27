@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { Confirmation } from "@/components/Confirmation";
-import { Frame } from "@/components/Frame";
+import { Card, PhotoCredit } from "@/components/Frame";
 import { RsvpForm, type Member } from "@/components/RsvpForm";
-import { WeddingHeader } from "@/components/WeddingHeader";
+import { InviteHero, WeddingDetails } from "@/components/WeddingHeader";
 import { randomEmotion } from "@/config/rsvp";
 import { firstNames } from "@/lib/names";
 import { getInvitation } from "@/lib/sheet";
@@ -24,17 +24,21 @@ export default async function InvitePage({ params }: PageProps<"/i/[token]">) {
   const greeting = firstNames(invitation.members.map((member) => member.name));
 
   return (
-    <Frame>
-      <WeddingHeader
-        greeting={greeting}
-        ceremonyGuest={invitation.ceremony}
-        calendarToken={invitation.responded ? token : undefined}
-      />
-      {invitation.responded ? (
-        <Confirmation greeting={greeting} members={invitation.members} />
-      ) : (
-        <RsvpForm token={token} members={members} />
-      )}
-    </Frame>
+    <main>
+      <InviteHero greeting={greeting} />
+      <div className="px-3 pt-2 sm:px-4">
+        <Card>
+          <WeddingDetails ceremonyGuest={invitation.ceremony} calendarToken={invitation.responded ? token : undefined} />
+          {invitation.responded ? (
+            <Confirmation greeting={greeting} members={invitation.members} />
+          ) : (
+            <RsvpForm token={token} members={members} />
+          )}
+        </Card>
+      </div>
+      <div className="pb-[env(safe-area-inset-bottom)]">
+        <PhotoCredit />
+      </div>
+    </main>
   );
 }

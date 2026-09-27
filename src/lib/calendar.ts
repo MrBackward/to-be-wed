@@ -2,16 +2,22 @@ import { formatTime, wedding } from "@/config/wedding";
 
 export type CalendarEvent = "ceremony" | "reception";
 
-const location = [wedding.venue, wedding.address].filter((part) => !part.includes("TBC")).join(", ");
+const venue = `${wedding.venue}, ${wedding.address}`;
 
 function eventDetails(event: CalendarEvent, ceremonyGuest: boolean) {
   if (event === "ceremony") {
-    return { ...wedding.ceremony, title: `${wedding.couple}'s wedding ceremony`, description: `Ceremony from ${formatTime(wedding.ceremony.start)}` };
+    return {
+      ...wedding.ceremony,
+      title: `${wedding.couple}'s wedding ceremony`,
+      description: `Ceremony at ${wedding.ceremonySpot} from ${formatTime(wedding.ceremony.start)}`,
+      location: `${wedding.ceremonySpot}, ${venue}`,
+    };
   }
   return {
     ...wedding.reception,
     title: ceremonyGuest ? `${wedding.couple}'s wedding reception` : `${wedding.couple}'s wedding`,
-    description: `From ${formatTime(wedding.reception.start)} until late`,
+    description: `${ceremonyGuest ? `Reception in ${wedding.receptionSpot.toLowerCase()} from` : "From"} ${formatTime(wedding.reception.start)} until late`,
+    location: venue,
   };
 }
 
@@ -24,7 +30,7 @@ function escapeText(text: string) {
 }
 
 export function icsEvent(event: CalendarEvent, ceremonyGuest: boolean, url: string) {
-  const { start, end, title, description } = eventDetails(event, ceremonyGuest);
+  const { start, end, title, description, location } = eventDetails(event, ceremonyGuest);
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -38,7 +44,7 @@ export function icsEvent(event: CalendarEvent, ceremonyGuest: boolean, url: stri
     `DTEND:${utcStamp(end)}`,
     `SUMMARY:${escapeText(title)}`,
     `DESCRIPTION:${escapeText(description)}`,
-    ...(location ? [`LOCATION:${escapeText(location)}`] : []),
+    `LOCATION:${escapeText(location)}`,
     `URL:${url}`,
     "END:VEVENT",
     "END:VCALENDAR",
@@ -47,13 +53,13 @@ export function icsEvent(event: CalendarEvent, ceremonyGuest: boolean, url: stri
 }
 
 export function googleCalendarUrl(event: CalendarEvent, ceremonyGuest: boolean) {
-  const { start, end, title, description } = eventDetails(event, ceremonyGuest);
+  const { start, end, title, description, location } = eventDetails(event, ceremonyGuest);
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: title,
     dates: `${utcStamp(start)}/${utcStamp(end)}`,
     details: description,
+    location,
   });
-  if (location) params.set("location", location);
   return `https://calendar.google.com/calendar/render?${params}`;
 }

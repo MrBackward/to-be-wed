@@ -14,7 +14,11 @@ export const wedding = {
   ceremony,
   reception,
   date: new Intl.DateTimeFormat("en-AU", { timeZone, weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(reception.start),
-  venue: "Venue TBC",
-  address: "Address TBC",
+  venue: "Bison Barn",
+  address: "281 Upper Widgee Road, Widgee QLD 4570",
+  ceremonySpot: "The Lower Mountain",
+  receptionSpot: "The Barn",
+  directions: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Bison Barn, 281 Upper Widgee Road, Widgee QLD 4570")}`,
+  photoCredit: "Bison Barn",
   rsvpBy: "TBC",
 };

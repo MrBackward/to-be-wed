@@ -7,6 +7,30 @@
   --color-ivory: #faf6f0;
   --color-gold: #c9a96e;
   --color-ink: #2e1d20;
+
+  --animate-drift: drift 40s ease-out both;
+  --animate-nudge: nudge 2.4s ease-in-out infinite;
+
+  @keyframes drift {
+    from {
+      transform: scale(1.14) translateY(2%);
+    }
+    to {
+      transform: scale(1.02) translateY(0);
+    }
+  }
+
+  @keyframes nudge {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(6px);
+      opacity: 1;
+    }
+  }
 }
 
 @theme inline {
@@ -24,6 +48,12 @@ html {
 
 body {
   color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 option,
