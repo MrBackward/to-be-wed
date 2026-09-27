@@ -25,7 +25,11 @@ export default async function InvitePage({ params }: PageProps<"/i/[token]">) {
 
   return (
     <Frame>
-      <WeddingHeader greeting={greeting} calendarToken={invitation.responded ? token : undefined} />
+      <WeddingHeader
+        greeting={greeting}
+        ceremonyGuest={invitation.ceremony}
+        calendarToken={invitation.responded ? token : undefined}
+      />
       {invitation.responded ? (
         <Confirmation greeting={greeting} members={invitation.members} />
       ) : (

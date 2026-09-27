@@ -11,9 +11,10 @@ const COLUMNS = {
   song: "Song Requests",
   message: "Message to couple",
   response: "RSVP Response",
+  ceremony: "Invited to ceremony",
 } as const;
 
-const OPTIONAL: Column[] = ["response"];
+const OPTIONAL: Column[] = ["response", "ceremony"];
 
 export type Column = keyof typeof COLUMNS;
 
@@ -28,6 +29,7 @@ export type Guest = {
   song: string;
   message: string;
   response: string;
+  ceremony: boolean;
 };
 
 export type Sheet = {
@@ -108,6 +110,7 @@ export async function loadSheet(): Promise<Sheet> {
         song: cell("song"),
         message: cell("message"),
         response: cell("response"),
+        ceremony: /^y(es)?$/i.test(cell("ceremony")),
       };
     })
     .filter((guest) => guest.name);
@@ -138,6 +141,7 @@ export async function getInvitation(token: string) {
     sheet,
     members,
     responded: members.some((member) => member.accepted),
+    ceremony: members.some((member) => member.ceremony),
   };
 }
 

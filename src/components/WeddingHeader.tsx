@@ -1,8 +1,17 @@
 import { AddToCalendar } from "@/components/AddToCalendar";
 import { Monogram } from "@/components/Frame";
-import { wedding } from "@/config/wedding";
+import { formatTime, wedding } from "@/config/wedding";
 
-export function WeddingHeader({ greeting, calendarToken }: { greeting: string; calendarToken?: string }) {
+export function WeddingHeader({
+  greeting,
+  ceremonyGuest,
+  calendarToken,
+}: {
+  greeting: string;
+  ceremonyGuest: boolean;
+  calendarToken?: string;
+}) {
+  const reception = `${formatTime(wedding.reception.start)} until late`;
   return (
     <header>
       <Monogram />
@@ -16,13 +25,20 @@ export function WeddingHeader({ greeting, calendarToken }: { greeting: string; c
       <dl className="mx-auto mt-6 max-w-xs space-y-1 text-ink/80">
         <dt className="sr-only">When</dt>
         <dd className="font-medium text-ink">{wedding.date}</dd>
-        <dd className="font-medium text-ink">{wedding.time}</dd>
+        {ceremonyGuest ? (
+          <>
+            <dd className="font-medium text-ink">Ceremony {formatTime(wedding.ceremony.start)}</dd>
+            <dd className="font-medium text-ink">Reception {reception}</dd>
+          </>
+        ) : (
+          <dd className="font-medium text-ink">{reception}</dd>
+        )}
         <dt className="sr-only">Where</dt>
         <dd>{wedding.venue}</dd>
         <dd className="text-sm text-pretty">{wedding.address}</dd>
       </dl>
       {calendarToken ? (
-        <AddToCalendar token={calendarToken} />
+        <AddToCalendar token={calendarToken} ceremonyGuest={ceremonyGuest} />
       ) : (
         <p className="mt-6 text-sm text-maroon italic">Kindly reply by {wedding.rsvpBy}</p>
       )}

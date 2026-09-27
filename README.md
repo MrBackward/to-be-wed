@@ -10,6 +10,8 @@ Next.js 16, TanStack Form, Zod, Google Sheets API, deployed to AWS (Lambda + Clo
 - The token lives in the sheet's **HASH STRING** column. Couples linked through **Connected for single invite** share one token and one QR code, and answer per person.
 - Each person taps **Accepts** or **Declines**. Below that is an optional "make it fun" section: a feeling (free text or a suggestion), an emoji, and a synonym for their reply ("Ecstatically RSVPs yes 🥳").
 - **plus one allowed** = `Yes` offers that guest a +1 (with a name) once they accept.
+- **Invited to ceremony** = `Yes` shows that invitation the 11:00 am ceremony as well as the 2:30 pm reception, and gives them separate calendar events for each. Everyone else only ever sees the reception time; the ceremony is never mentioned to them.
+- After RSVPing, guests get an **Add to calendar** button (a calendar file on iPhone and desktop, Google Calendar on Android). Times live in `src/config/wedding.ts`.
 - RSVPs can only be sent once. After that the link shows a confirmation.
 - The site only ever writes these cells: **Invite Accepted** (`Yes`/`No`), **With +1** (the +1's name), **Song Requests**, **Message to couple**, and **RSVP Response** (the full phrase, if you add that column; it's optional). Everything else, including the totals formulas, is left alone. Columns are found by header name, so they can be moved around.
 
