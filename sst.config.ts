@@ -14,12 +14,15 @@ export default $config({
     };
   },
   async run() {
+    const domain = "natandxander.wedding";
+    const isProduction = $app.stage === "production";
+
     const secrets = [
       new sst.Secret("LinkSecret"),
       new sst.Secret("GoogleClientEmail"),
       new sst.Secret("GooglePrivateKey"),
       new sst.Secret("SheetId"),
-      new sst.Secret("SiteUrl", "http://localhost:3000"),
+      new sst.Secret("SiteUrl", isProduction ? `https://${domain}` : "http://localhost:3000"),
     ];
 
     new sst.aws.Nextjs("Site", {
@@ -27,7 +30,7 @@ export default $config({
       environment: {
         SHEET_TAB: process.env.SHEET_TAB ?? "",
       },
-      // domain: $app.stage === "production" ? "example.com" : undefined,
+      domain: isProduction ? { name: domain, redirects: [`www.${domain}`] } : undefined,
     });
   },
 });
