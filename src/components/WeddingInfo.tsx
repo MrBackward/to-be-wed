@@ -32,14 +32,23 @@ export function WeddingInfo({ early, ceremony }: { early: boolean; ceremony: boo
       <div className="mt-6 space-y-6 text-left">
         {early && (
           <Item title="Arriving early" highlight>
-            You&apos;re one of the lucky few joining us the day before, so come and claim the best spot from{" "}
-            {when(camping.earlyFrom)}. Bragging rights are included.
+            You&apos;re our nearest and dearest, so you get to arrive the day before, from {when(camping.earlyFrom)}.
+            That means kicking back at your fully set-up campsite while the latecomers wrestle their tents. Or not,
+            because you&apos;ll most likely be helping us set up. Sucker.
           </Item>
         )}
         <Item title="Camping">
           The venue is a campground first and a wedding venue second, so everyone is welcome to camp. Bring your own
           tent, swag or caravan; we&apos;re supplying the view, not the gear. {early ? "Everyone else can" : "You can"}{" "}
-          set up from {when(camping.from)}, and campsites need to be packed up and gone by {when(camping.until)}.
+          set up from {when(camping.from)}, and campsites need to be packed up and gone by {when(camping.until)}. The
+          campsites are unpowered, so bear that in mind (and maybe pack a power bank).
+        </Item>
+        <Item title="When nature calls">
+          <span className="font-[family-name:var(--font-script)] text-4xl leading-none text-maroon">
+            &ldquo;Luxury&rdquo;
+          </span>{" "}
+          portaloos are available. Please be respectful of the other guests and leave them how you&apos;d like to find
+          them.
         </Item>
         <Item title="Other places to stay">
           There are a few cabins at the venue, but they&apos;re limited and family (like our grandparents) get first
@@ -59,7 +68,7 @@ export function WeddingInfo({ early, ceremony }: { early: boolean; ceremony: boo
         <Item title="Food">
           There&apos;s no sit-down meal. Instead there&apos;ll be grazing platters through the reception and wood-fired
           pizzas made to order whenever hunger strikes. We&apos;ll pause for a few quiet moments for speeches, so save
-          the heckling for after.
+          the heckling for after. Beyond the reception, your bellies are your responsibility.
         </Item>
         <Item title="Drinks">
           A selection of beer and wine will be out for everyone to help themselves from when the reception kicks off.
