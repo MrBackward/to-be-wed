@@ -25,7 +25,7 @@ export default async function InvitePage({ params }: PageProps<"/i/[token]">) {
 
   return (
     <main>
-      <InviteHero greeting={greeting} />
+      <InviteHero greeting={greeting} responded={invitation.responded} />
       <div className="px-3 pt-2 sm:px-4">
         <Card>
           <WeddingDetails ceremonyGuest={invitation.ceremony} calendarToken={invitation.responded ? token : undefined} />

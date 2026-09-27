@@ -4,7 +4,7 @@ import { Monogram } from "@/components/Frame";
 import { Hero } from "@/components/Hero";
 import { formatTime, wedding } from "@/config/wedding";
 
-export function InviteHero({ greeting }: { greeting: string }) {
+export function InviteHero({ greeting, responded }: { greeting: string; responded: boolean }) {
   return (
     <Hero
       image={barn}
@@ -12,23 +12,27 @@ export function InviteHero({ greeting }: { greeting: string }) {
       position="45% 42%"
     >
       <Monogram light />
-      <p className="font-serif text-2xl text-ivory italic">Dear {greeting},</p>
-      <p className="mt-4 text-xs font-medium tracking-[0.2em] text-balance text-gold uppercase sm:tracking-[0.3em]">
-        You&apos;re invited to the wedding of
-      </p>
-      <h1 className="mt-2 font-serif text-[clamp(2.75rem,13vw,5rem)] leading-tight whitespace-nowrap">{wedding.couple}</h1>
-      <p className="mt-2 text-sm text-ivory/90">
-        {wedding.venue}
-      </p>
-      <a
-        href="#details"
-        className="mx-auto mt-6 mb-4 flex min-h-11 flex-col items-center justify-center px-4 text-xs font-medium tracking-[0.2em] text-ivory/85 uppercase"
-      >
-        RSVP below
-        <svg aria-hidden viewBox="0 0 20 20" className="mt-1 size-5 animate-nudge fill-none stroke-current stroke-[1.8] motion-reduce:animate-none">
-          <path d="M5.5 7.5 10 12l4.5-4.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </a>
+      {responded ? (
+        <h1 className="sr-only">{wedding.couple}</h1>
+      ) : (
+        <>
+          <p className="font-serif text-2xl text-ivory italic">Dear {greeting},</p>
+          <p className="mt-4 text-xs font-medium tracking-[0.2em] text-balance text-gold uppercase sm:tracking-[0.3em]">
+            You&apos;re invited to the wedding of
+          </p>
+          <h1 className="mt-2 font-serif text-[clamp(2.75rem,13vw,5rem)] leading-tight whitespace-nowrap">{wedding.couple}</h1>
+          <p className="mt-2 text-sm text-ivory/90">{wedding.venue}</p>
+          <a
+            href="#details"
+            className="mx-auto mt-6 mb-4 flex min-h-11 flex-col items-center justify-center px-4 text-xs font-medium tracking-[0.2em] text-ivory/85 uppercase"
+          >
+            RSVP below
+            <svg aria-hidden viewBox="0 0 20 20" className="mt-1 size-5 animate-nudge fill-none stroke-current stroke-[1.8] motion-reduce:animate-none">
+              <path d="M5.5 7.5 10 12l4.5-4.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        </>
+      )}
     </Hero>
   );
 }
