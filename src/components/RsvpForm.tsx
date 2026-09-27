@@ -279,11 +279,6 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
       </form.Field>
 
       <div className="space-y-3">
-        {serverError && (
-          <p role="alert" className="rounded-md bg-maroon-mist px-4 py-3 text-sm text-maroon-deep">
-            {serverError}
-          </p>
-        )}
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
             <button
@@ -294,6 +289,15 @@ export function RsvpForm({ token, members }: { token: string; members: Member[] 
               {isSubmitting || refreshing ? "Sending..." : "Send RSVP"}
             </button>
           )}
+        </form.Subscribe>
+        <form.Subscribe selector={(state) => state.submissionAttempts > 0 && !state.isValid}>
+          {(invalid) =>
+            (invalid || serverError) && (
+              <p role="alert" className="rounded-md bg-maroon-mist px-4 py-3 text-sm text-maroon-deep">
+                {invalid ? "Some answers need your attention. Please check the ones marked above." : serverError}
+              </p>
+            )
+          }
         </form.Subscribe>
         <p className="text-center text-xs text-ink/60">You can only send this once, so please check your answers.</p>
       </div>
